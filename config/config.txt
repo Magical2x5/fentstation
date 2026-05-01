@@ -65,7 +65,7 @@ ENABLE_LOCALHOST_RANK
 #USE_ACCOUNT_AGE_FOR_JOBS
 
 ## Unhash this to track player playtime in the database. Requires database to be enabled.
-#USE_EXP_TRACKING
+USE_EXP_TRACKING
 ## Unhash this to enable playtime requirements for head jobs.
 #USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
@@ -189,8 +189,8 @@ IPINTEL_REJECT_BAD
 ## This is also used to show the server's address in the TGS check command if the public address isn't set
 # SERVER ss13.example.com:2506
 
-## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+## forum address (REPLACE WITH DISCORD URL)
+FORUMURL https://discord.gg/Nh696mdzNj
 
 ## Wiki address
 WIKIURL https://wiki.tgstation13.org

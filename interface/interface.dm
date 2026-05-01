@@ -22,9 +22,9 @@
 	DIRECT_OUTPUT(src, link(output))
 
 /client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
+	set name = "Discord"
+	set desc = "Visit the discord."
+	set hidden = FALSE
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
