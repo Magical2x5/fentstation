@@ -586,12 +586,12 @@
 		payload = null
 		G.forceMove(get_turf(src))
 
+		qdel(src)
 		if(is_impact)
 			G.detonate()
 		else()
 			G.attack_self(null)
 
-		qdel(src)
 
 /obj/item/food/pie/bomb_pie/Initialize(mapload)
 	. = ..()
@@ -606,6 +606,6 @@
 	var/obj/item/grenade/G = payload
 	payload = null
 	G.forceMove(get_turf(eater))
+	qdel(src)
 	G.detonate()
 
-	qdel(src)
