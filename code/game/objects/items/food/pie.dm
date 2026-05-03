@@ -581,17 +581,29 @@
 /obj/item/food/pie/bomb_pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 
-	if(payload)
-		var/obj/item/grenade/G = payload
-		payload = null
-		G.forceMove(get_turf(src))
+	if(!payload)
+		return
 
-		qdel(src)
-		if(is_impact)
-			G.detonate()
-		else()
-			G.attack_self(null)
+	trigger_payload(get_turf(src), null, is_impact)
 
+/obj/item/food/pie/bomb_pie/proc/trigger_payload(turf/T, mob/living/user, instant = FALSE)
+	if(!payload)
+		return
+
+	var/obj/item/grenade/G = payload
+	payload = null
+	G.forceMove(get_turf(src))
+	if(is_impact)
+		if(hascall(G, "detonate"))
+			call(G, "detonate")()
+		else if(hascall(G, "prime"))
+			call(G, "prime")()
+		else
+			G.attack_self(user)
+	else
+		G.attack_self(user)
+
+	qdel(src)
 
 /obj/item/food/pie/bomb_pie/Initialize(mapload)
 	. = ..()
@@ -608,4 +620,5 @@
 	G.forceMove(get_turf(eater))
 	qdel(src)
 	G.detonate()
+
 
