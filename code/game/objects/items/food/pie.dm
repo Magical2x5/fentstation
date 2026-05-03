@@ -608,11 +608,7 @@
 
 	// Transform into ruined pie
 	var/turf/current_turf = get_turf(src)
-	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
-
-	if(user.is_holding(src))
-		user.dropItemToGround(src)
-		user.put_in_hands(new_pie)
+	var/obj/item/food/pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
 	qdel(src)
 
@@ -634,7 +630,7 @@
 
 	// Transform into ruined pie
 	var/turf/current_turf = get_turf(src)
-	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
+	var/obj/item/food/pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
 	if(feeder.is_holding(src))
 		feeder.dropItemToGround(src)
