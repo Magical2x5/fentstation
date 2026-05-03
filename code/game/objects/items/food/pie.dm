@@ -610,10 +610,6 @@
 	var/turf/current_turf = get_turf(src)
 	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
-	if(!user.transferItemToLoc(I, src))
-		qdel(new_pie)
-		return TRUE
-
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
 		user.put_in_hands(new_pie)
@@ -640,13 +636,9 @@
 	var/turf/current_turf = get_turf(src)
 	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
-	if(!user.transferItemToLoc(I, src))
-		qdel(new_pie)
-		return TRUE
-
-	if(user.is_holding(src))
-		user.dropItemToGround(src)
-		user.put_in_hands(new_pie)
+	if(feeder.is_holding(src))
+		feeder.dropItemToGround(src)
+		feeder.put_in_hands(new_pie)
 
 	qdel(src)
 
