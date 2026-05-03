@@ -572,9 +572,9 @@
 	is_impact = !is_impact
 
 	if(is_impact)
-		to_chat(user, span_warning("Pie bomb is now set to detonate regularly."))
-	else()
 		to_chat(user, span_warning("Pie bomb is now set to detonate on impact."))
+	else()
+		to_chat(user, span_warning("Pie bomb is now set to detonate regularly."))
 
 	return TRUE
 
@@ -591,6 +591,8 @@
 		else()
 			G.attack_self(null)
 
+		qdel(src)
+
 /obj/item/food/pie/bomb_pie/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(on_bomb_pie_eaten))
@@ -605,3 +607,5 @@
 	payload = null
 	G.forceMove(get_turf(eater))
 	G.detonate()
+
+	qdel(src)
