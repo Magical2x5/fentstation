@@ -532,12 +532,18 @@
 		/datum/reagent/consumable/nutriment = 18,
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)
-	tastes = list("sweet death" = 1, "explosives" = 1, "suicide" = 1)
+	tastes = list("sweet death" = 1, "explosives" = 1, "regret" = 1)
 	var/obj/item/grenade/payload
+	var/is_impact = FALSE //determines if bomb pie will explode on impact or default timer
 
 /obj/item/food/pie/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/grenade))
 		return ..()
+
+	if(istype(src, /obj/item/food/pie/bomb_pie))
+		to_chat(user, span_warning("There is already something inside of [src]"))
+		return ..()
+
 
 	var/turf/current_turf = get_turf(src)
 
@@ -558,7 +564,19 @@
 	to_chat(user, span_warning("You wiggle the [I] inside the [new_pie]."))
 	return TRUE
 
-	return ..()
+
+/obj/item/food/pie/bomb_pie/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/screwdriver))
+		return ..()
+
+	is_impact = !is_impact
+
+	if(is_impact)
+		to_chat(user, span_warning("Pie bomb is now set to detonate regularly."))
+	else()
+		to_chat(user, span_warning("Pie bomb is now set to detonate on impact."))
+
+	return TRUE
 
 /obj/item/food/pie/bomb_pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -567,4 +585,23 @@
 		var/obj/item/grenade/G = payload
 		payload = null
 		G.forceMove(get_turf(src))
-		G.attack_self(null)
+
+		if(is_impact)
+			G.detonate()
+		else()
+			G.attack_self(null)
+
+/obj/item/food/pie/bomb_pie/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(on_bomb_pie_eaten))
+
+/obj/item/food/pie/bomb_pie/proc/on_bomb_pie_eaten(obj/item/food/source, mob/living/eater, mob/living/feeder)
+	SIGNAL_HANDLER
+
+	if(!payload)
+		return
+
+	var/obj/item/grenade/G = payload
+	payload = null
+	G.forceMove(get_turf(eater))
+	G.detonate()
