@@ -66,7 +66,7 @@
 		/datum/reagent/consumable/banana = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
-	tastes = list("pie" = 1)
+	tastes = list("pie" = 1, "banana" = 1)
 	foodtypes = GRAIN|DAIRY|SUGAR|FRUIT
 	var/stunning = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -514,7 +514,7 @@
 
 /obj/item/food/pieslice/bacid_pie
 	name = "battery acid pie slice"
-	desc = "The battery acid filling has a concerningly appealing bright green color"
+	desc = "The battery acid filling has a concerningly appealing bright green color."
 	icon_state = "bacid_pie_slice"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4.5,
@@ -523,3 +523,37 @@
 	tastes = list("battery acid" = 1, "electricity" = 1, "a cyber world" = 1)
 	foodtypes = TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pie/bomb_pie
+	name = "suspicious pie"
+	desc= "A very suspicious looking pie, your instincts tell you to stay far away from this."
+	icon_state = "pie_bomb"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 18,
+		/datum/reagent/consumable/nutriment/vitamin = 3
+	)
+	tastes = list("sweet death" = 1, "explosives" = 1, "suicide" = 1)
+	var/obj/item/grenade/payload
+
+/obj/item/food/pie/bomb_pie/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/grenade))
+		if(payload)
+			to_chat(user, span_warning("There is already something inside the [src]!"))
+
+		if(!user.transferItemToLoc(I, src))
+			return
+
+		payload = I
+		to_chat(user, span_warning("You put [I] inside the [src]."))
+		return
+
+	return ..()
+
+/obj/item/food/pie/bomb_pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+
+	if(payload)
+		var/obj/item/grenade/G = payload
+		payload = null
+		G.forceMove(get_turf(src))
+		G.attack_self(null)
