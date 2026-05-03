@@ -24,7 +24,7 @@ FEEDBACK_DATABASE ss13
 FEEDBACK_TABLEPREFIX
 
 ## Username/Login used to access the database.
-FEEDBACK_LOGIN tgstation
+FEEDBACK_LOGIN ss13
 
 ## Password used to access the database.
 FEEDBACK_PASSWORD strongpassword
