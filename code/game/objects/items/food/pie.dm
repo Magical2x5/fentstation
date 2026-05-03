@@ -598,12 +598,14 @@
 			call(G, "detonate")()
 		else if(hascall(G, "prime"))
 			call(G, "prime")()
-		else
+		else()
 			G.attack_self(user)
 	else
-		G.attack_self(user)
+		if(hascall(G, "arm_grenade"))
+			call(G, "arm_grenade")()
+		else()
+			G.attack_self(user)
 
-	qdel(src)
 
 /obj/item/food/pie/bomb_pie/Initialize(mapload)
 	. = ..()
@@ -618,7 +620,6 @@
 	var/obj/item/grenade/G = payload
 	payload = null
 	G.forceMove(get_turf(eater))
-	qdel(src)
 	G.detonate()
 
 
