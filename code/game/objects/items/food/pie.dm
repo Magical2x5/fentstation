@@ -524,7 +524,7 @@
 	foodtypes = TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pie/bomb_pie
+/obj/item/food/pie/bomb_pie //Does not work with all grenades
 	name = "suspicious pie"
 	desc = "A very suspicious looking pie, your instincts tell you to stay far away from this."
 	icon_state = "pie_bomb"
@@ -606,6 +606,20 @@
 		else()
 			G.attack_self(user)
 
+	// Transform into ruined pie
+	var/turf/current_turf = get_turf(src)
+	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
+
+	if(!user.transferItemToLoc(I, src))
+		qdel(new_pie)
+		return TRUE
+
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+		user.put_in_hands(new_pie)
+
+	qdel(src)
+
 
 /obj/item/food/pie/bomb_pie/Initialize(mapload)
 	. = ..()
@@ -622,4 +636,30 @@
 	G.forceMove(get_turf(eater))
 	G.detonate()
 
+	// Transform into ruined pie
+	var/turf/current_turf = get_turf(src)
+	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
+	if(!user.transferItemToLoc(I, src))
+		qdel(new_pie)
+		return TRUE
+
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+		user.put_in_hands(new_pie)
+
+	qdel(src)
+
+
+/obj/item/food/pie/ruined_pie
+	name = "ruined pie"
+	icon_state = "pie_ruined"
+	desc = "A special kind of pie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/nutriment/mineral = 1.5
+	)
+	tastes = list("metal" = 1, "gunpowder" = 1, "plastic" = 1)
+	foodtypes = GRAIN|DAIRY|TOXIC
+	venue_value = FOOD_PRICE_NORMAL
