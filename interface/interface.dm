@@ -24,7 +24,7 @@
 /client/verb/forum()
 	set name = "Discord"
 	set desc = "Visit the discord."
-	set hidden = FALSE
+	set hidden = TRUE
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
