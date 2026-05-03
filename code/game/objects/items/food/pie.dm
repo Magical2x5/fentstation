@@ -526,7 +526,7 @@
 
 /obj/item/food/pie/bomb_pie
 	name = "suspicious pie"
-	desc= "A very suspicious looking pie, your instincts tell you to stay far away from this."
+	desc = "A very suspicious looking pie, your instincts tell you to stay far away from this."
 	icon_state = "pie_bomb"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 18,
@@ -535,17 +535,28 @@
 	tastes = list("sweet death" = 1, "explosives" = 1, "suicide" = 1)
 	var/obj/item/grenade/payload
 
-/obj/item/food/pie/bomb_pie/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/grenade))
-		if(payload)
-			to_chat(user, span_warning("There is already something inside the [src]!"))
+/obj/item/food/pie/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/grenade))
+		return ..()
 
-		if(!user.transferItemToLoc(I, src))
-			return
+	var/turf/current_turf = get_turf(src)
 
-		payload = I
-		to_chat(user, span_warning("You put [I] inside the [src]."))
-		return
+	var/obj/item/food/pie/bomb_pie/new_pie = new /obj/item/food/pie/bomb_pie(current_turf)
+
+	if(!user.transferItemToLoc(I, src))
+		qdel(new_pie)
+		return TRUE
+
+	new_pie.payload = I
+
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+		user.put_in_hands(new_pie)
+
+	qdel(src)
+
+	to_chat(user, span_warning("You wiggle the [I] inside the [new_pie]."))
+	return TRUE
 
 	return ..()
 
