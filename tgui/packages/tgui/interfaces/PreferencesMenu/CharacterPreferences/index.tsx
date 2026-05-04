@@ -100,11 +100,6 @@ export function CharacterPreferenceWindow(props) {
           profiles={data.character_profiles}
         />
       </Stack.Item>
-      {!data.content_unlocked && (
-        <Stack.Item align="center">
-          Everyone has the same amount of slots!
-        </Stack.Item>
-      )}
       <Stack.Divider />
       <Stack.Item>
         <Stack fill>
