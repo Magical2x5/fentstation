@@ -25,7 +25,7 @@ SERVERNAME FentStation 1
 SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME
+#STATIONNAME
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 HUB
@@ -86,10 +86,10 @@ USE_EXP_TRACKING
 PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
-# INACTIVITY_PERIOD 300
+INACTIVITY_PERIOD 300
 
 ## period of time in seconds for players to be considered afk and kickable
-# AFK_PERIOD 600
+AFK_PERIOD 600
 
 ## disconnect players who are considered afk
 # KICK_INACTIVE
@@ -199,7 +199,7 @@ WIKIURL https://wiki.tgstation13.org
 RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
-#GITHUBURL https://github.com/Magical2x5/fentstation
+GITHUBURL https://github.com/Magical2x5/fentstation
 
 ## Discord bot command prefix, if the discord bot is used
 # DISCORDBOTCOMMANDPREFIX ?
@@ -285,7 +285,7 @@ NOTE_FRESH_DAYS 91.31055
 NOTE_STALE_DAYS 365.2422
 
 ## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
-#AUTO_LAG_SWITCH_POP 75
+AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
 
