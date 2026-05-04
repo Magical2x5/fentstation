@@ -540,6 +540,9 @@
 	if(!istype(I, /obj/item/grenade))
 		return ..()
 
+	if(istype(src, /obj/item/food/pie/ruined_pie))
+		return ..()
+
 	if(istype(src, /obj/item/food/pie/bomb_pie))
 		to_chat(user, span_warning("There is already something inside of [src]"))
 		return ..()
