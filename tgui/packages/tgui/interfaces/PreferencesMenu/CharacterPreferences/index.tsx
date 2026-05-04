@@ -102,7 +102,7 @@ export function CharacterPreferenceWindow(props) {
       </Stack.Item>
       {!data.content_unlocked && (
         <Stack.Item align="center">
-          Buy BYOND premium for more slots!
+          Everyone has the same amount of slots!
         </Stack.Item>
       )}
       <Stack.Divider />
