@@ -536,7 +536,7 @@
 	var/obj/item/grenade/payload
 	var/is_impact = FALSE //determines if bomb pie will explode on impact or default timer
 
-/obj/item/food/pie/attackby(obj/item/I, mob/user, params) // PLEASE PREVENT PUTTING GRENADES IN RUINED PIES, SO YOU CANT RELOAD A PIE lmao xd
+/obj/item/food/pie/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/grenade))
 		return ..()
 
@@ -547,6 +547,16 @@
 		to_chat(user, span_warning("There is already something inside of [src]"))
 		return ..()
 
+	to_chat(user, span_warning("You proceeed to wiggle the [I] inside the [src]."))
+
+	// Action timer
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	// Recheck
+	if(QDELETED(src) || QDELETED(I))
+		return TRUE
+	if(!user.is_holding(I))
+		return TRUE
 
 	var/turf/current_turf = get_turf(src)
 
@@ -564,7 +574,6 @@
 
 	qdel(src)
 
-	to_chat(user, span_warning("You wiggle the [I] inside the [new_pie]."))
 	return TRUE
 
 
@@ -611,6 +620,7 @@
 
 	// Transform into ruined pie
 	var/turf/current_turf = get_turf(src)
+
 	var/obj/item/food/pie/new_pie = new /obj/item/food/pie/ruined_pie(current_turf)
 
 	qdel(src)
