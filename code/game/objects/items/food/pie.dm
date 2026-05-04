@@ -536,7 +536,7 @@
 	var/obj/item/grenade/payload
 	var/is_impact = FALSE //determines if bomb pie will explode on impact or default timer
 
-/obj/item/food/pie/attackby(obj/item/I, mob/user, params)
+/obj/item/food/pie/attackby(obj/item/I, mob/user, params) // PLEASE PREVENT PUTTING GRENADES IN RUINED PIES, SO YOU CANT RELOAD A PIE lmao xd
 	if(!istype(I, /obj/item/grenade))
 		return ..()
 
