@@ -7,9 +7,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
-	var/default_slot = 1
+	var/default_slot = 5
 	/// The maximum number of slots we're allowed to contain
-	var/max_save_slots = 8
+	var/max_save_slots = 9
 
 	/// Bitflags for communications that are muted
 	var/muted = NONE
