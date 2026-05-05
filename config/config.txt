@@ -141,7 +141,7 @@ ALLOW_RESPAWN 0
 RESPAWN_DELAY 0
 
 ## set a hosted by name for unix platforms
-HOSTEDBY MagicalMayoneyse
+HOSTEDBY PepperAgent87
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
 ## You probably want this enabled for a production server.
