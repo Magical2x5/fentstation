@@ -609,6 +609,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	return GLOB.always_state
 
 /datum/welcome_menu/ui_interact(mob/user, datum/tgui/ui)
+	SSassets.transport.send_assets(user, list(get_asset_datum(/datum/asset/simple/welcome)))
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "WelcomeMenu", "Welcome")

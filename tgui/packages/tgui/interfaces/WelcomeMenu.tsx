@@ -1,6 +1,7 @@
 import { useBackend } from 'tgui/backend';
-import { Button, Section, Stack } from 'tgui-core/components';
+import { Button, Image, Section, Stack } from 'tgui-core/components';
 import { Window } from 'tgui/layouts';
+import { resolveAsset } from '../assets';
 
 type WelcomeMenuData = {
   server_name: string;
@@ -27,14 +28,7 @@ export const WelcomeMenu = () => {
           <Stack.Item>
             <Stack align="center" justify="center">
               <Stack.Item>
-                <img
-                  src="icons/ui/tgui/emoji_beg.png"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    objectFit: 'contain',
-                  }}
-                />
+                <Image src="/emoji_cry.png"/>
               </Stack.Item>
 
               <Stack.Item>
@@ -44,14 +38,7 @@ export const WelcomeMenu = () => {
               </Stack.Item>
 
               <Stack.Item>
-                <img
-                  src="icons/ui/tgui/emoji_cry.png"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    objectFit: 'contain',
-                  }}
-                />
+                <Image src="/emoji_beg.png"/>
               </Stack.Item>
             </Stack>
           </Stack.Item>
