@@ -592,6 +592,61 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
 
+	// Queue the welcome screen
+	addtimer(CALLBACK(src, PROC_REF(show_welcome_menu)), 2 SECONDS)
+
+
+// WELCOME MENU
+/client/var/seen_welcome_menu = FALSE
+
+/datum/welcome_menu
+	var/client/owner
+
+/datum/welcome_menu/New(client/C)
+	owner = C
+
+/datum/welcome_menu/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/welcome_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "WelcomeMenu", "Welcome")
+		ui.open()
+
+/datum/welcome_menu/ui_data(mob/user)
+	var/list/data = list()
+
+	data["server_name"] = CONFIG_GET(string/servername)
+	data["message"] = "Please join our discord, pleeassseeee!"
+	data["discord_url"] = CONFIG_GET(string/forumurl)
+
+	return data
+
+/datum/welcome_menu/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("discord")
+			var/mob/user = usr
+			if(user?.client)
+				user << link(CONFIG_GET(string/forumurl))
+			return TRUE
+
+		if("close")
+			qdel(src)
+			return TRUE
+
+/client/proc/show_welcome_menu()
+	if(seen_welcome_menu || !mob)
+		return
+
+	seen_welcome_menu = TRUE
+	var/datum/welcome_menu/menu = new(src)
+	menu.ui_interact(mob)
+
+
 //////////////
 //DISCONNECT//
 //////////////
